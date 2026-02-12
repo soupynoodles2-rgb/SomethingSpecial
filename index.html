@@ -35,7 +35,7 @@
       <img id="imageDisplay" src="image1.gif" alt="Cute kitten with flowers" class="rounded-md h-[300px] object-cover" />
       <h2 id="valentineQuestion" class="text-4xl font-bold italic text-[#bd1e59] my-4 text-center">Will you be my Valentine?</h2>
 
-        <!-- Removed target="_blank" for better mobile navigation -->
+        <!-- Removed target="_blank" so it opens in the same tab on mobile -->
         <a id="accessLink"
           href="indexlet.html"
           class="mt-3 text-lg font-semibold text-pink-600 underline hidden z-50 bg-white/80 p-2 rounded-lg">
@@ -76,13 +76,13 @@
         noClickCount++;
         imageDisplay.src = imagePaths[noClickCount];
         
-        // MOBILE FIX: Cap the button size so it doesn't overflow the screen
+        // MOBILE FIX: Stop the button from getting larger than the screen
         const maxHeight = window.innerHeight * 0.5;
         const maxWidth = window.innerWidth * 0.9;
 
         buttonHeight = Math.min(buttonHeight + 35, maxHeight);
         buttonWidth = Math.min(buttonWidth + 35, maxWidth);
-        fontSize += 25; 
+        fontSize = Math.min(fontSize + 25, 60); // Cap font size
         
         yesButton.style.height = `${buttonHeight}px`; 
         yesButton.style.width = `${buttonWidth}px`;
