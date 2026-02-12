@@ -7,23 +7,27 @@ $(document).ready(function () {
             // 2. Hide envelope details
             $('.valentines-day .heart, .valentines-day .text, .valentines-day .front').hide();
 
-            // 3. Reveal the Card
-            $('#card').css({ 'visibility': 'visible', 'opacity': 0, 'transform': 'translate(-50%, -50%) scale(0.1)' });
+            // 3. Prepare the card state
+            // We use transform: translate(-50%, -50%) to keep it centered
+            $('#card').css({ 
+                'visibility': 'visible', 
+                'opacity': 0, 
+                'transform': 'translate(-50%, -50%) scale(0.1)' 
+            });
             
-            // 4. Simple Grow Animation (Clean for mobile)
+            // 4. Smooth Open Animation
             $('#card').animate({ 'opacity': 1 }, {
                 duration: 1000,
                 step: function (now, fx) {
-                    // Smooth growing effect
-                    var scale = 0.1 + (now * 0.9);
-                    $(this).css('transform', 'translate(-50%, -50%) scale(' + scale + ')');
+                    if (fx.prop === "opacity") {
+                        // Grow scale from 0.1 to 1 based on opacity progress
+                        var scale = 0.1 + (now * 0.9); 
+                        $(this).css('transform', 'translate(-50%, -50%) scale(' + scale + ')');
+                    }
                 },
                 complete: function() {
-                    // Final state ensures it stays centered and correct size
+                    // Lock the final scale to 1
                     $(this).css('transform', 'translate(-50%, -50%) scale(1)');
-                    
-                    // Enable scrolling on body if needed for very small screens
-                    $('body').css('overflow-y', 'auto');
                 }
             });
         });
