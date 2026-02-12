@@ -1,245 +1,245 @@
 @import url("https://fonts.googleapis.com/css?family=Sacramento");
 
-#card {
-  height: 500px;
-  width: 800px;
-  margin: 5em auto;
-  position: fixed;
-  top: -15px;
-  left: 25%;
-  display: flex;
-  visibility: hidden;
-}
-
-/* Styles for mobile devices */
-@media only screen and (max-width: 600px) {
-  #card {
-    width: 90%; /* Reduce width for mobile devices */
-    height: auto; /* Allow the height to adjust automatically */
-    margin: 2em auto; /* Adjust the margin */
-    position: static; /* Change the position to static so it's not fixed */
-    visibility: visible; /* Make the element visible */
-    top: 50px;
-  }
-
-  .side.side.one {
-    display: none;
-  }
-
-  #card p {
-    padding-left: 0 !important; /* Remove padding on the left on mobile devices */
-    padding-right: 0 !important; /* Remove padding on the right on mobile devices */
-    font-size: 1.3em !important;
-  }
-
-  .valentines-day {
-    position: fixed;
-    top: 15%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-}
-
-#card h2 {
-  font-size: 3em;
-  margin: 0;
-  color: pink;
-  text-align: center;
-}
-
-#card p {
-  font-size: 1.5em;
-  text-align: justify;
-  padding-left: 30px; /* Blank space on the left */
-  padding-right: 30px; /* Blank space on the right */
-}
-
-.side {
-  background: #eee;
-  height: 550px;
-  width: 400px;
-  padding: 10px;
-}
-
-.side.one {
-  width: 320px;
-  transform: skew(10deg, 20deg);
-  background: linear-gradient(90deg, #fff, #fff 40%, #ddd);
-  display: flex; /* Utiliza flexbox para centrar el corazón verticalmente */
-  justify-content: center; /* Centra horizontalmente el contenido */
-  align-items: center; /* Centra verticalmente el contenido */
-  transform: skew(10deg, 20deg);
-  position: relative;
-  overflow: hidden;
-}
-
-.side.two {
-  transform: skew(10deg, -15deg);
-  background: linear-gradient(-90deg, #fff, #fff 40%, #f0f0f0);
-}
-
 body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh; /* Changed to min-height for scrolling */
   font-family: "Sacramento", cursive;
   background-color: #fcf1e3;
-  overflow: hidden;
+  overflow: hidden; /* JavaScript will handle overflow changes */
+  margin: 0;
 }
 
+/* --- DESKTOP STYLES (Original) --- */
+#card {
+  height: 500px;
+  width: 800px;
+  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  visibility: hidden;
+  z-index: 10;
+}
+
+#card h2 {
+  font-size: 2.5em;
+  margin: 0 0 10px 0;
+  color: #bd1e59;
+  text-align: center;
+}
+
+#card p {
+  font-size: 1.4em;
+  text-align: justify;
+  line-height: 1.4;
+  padding: 0 10px;
+  color: #333;
+}
+
+.side {
+  background: #fff;
+  height: 100%;
+  width: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.side.one {
+  background: linear-gradient(90deg, #fff, #fff 40%, #ddd);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: skew(10deg);
+  transform-origin: left;
+  z-index: 2;
+}
+
+.side.two {
+  background: linear-gradient(-90deg, #fff, #fff 40%, #f0f0f0);
+  transform: skew(10deg);
+  transform-origin: left;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.side.one .fa-heart {
+  font-size: 6em;
+  color: #bd1e59;
+  animation: pulseHeart 1s ease-in-out infinite alternate;
+}
+
+/* --- ENVELOPE STYLES --- */
 .valentines-day {
   position: relative;
   cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.3s;
 }
 
 .envelope {
   position: relative;
   filter: drop-shadow(0 0 25px rgba(0, 0, 0, 0.3));
+  width: 300px; /* Explicit dimensions help layout */
+  height: 200px;
+  background-color: #ff9494;
 }
 
 .envelope:before {
   content: "";
   position: absolute;
-  width: 254px;
-  height: 254px;
+  width: 212px;
+  height: 212px;
   background-color: #ff9494;
   transform: rotate(-45deg);
   border-radius: 0 15px 0 0;
-  left: -37px;
-  top: -82px;
+  left: 44px;
+  top: -105px;
 }
 
 .envelope:after {
   content: "";
   position: absolute;
   background-color: #ff9494;
-  width: 360px;
-  height: 225px;
-  left: -90px;
-  top: 45px;
+  width: 300px;
+  height: 180px;
+  left: 0;
+  top: 0;
+  z-index: 5;
 }
 
 .heart {
   position: relative;
   background-color: #e01911;
   display: inline-block;
-  height: 180px;
-  top: 50px;
-  left: 0;
+  height: 100px;
+  width: 100px;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
   transform: rotate(-45deg);
-  width: 180px;
   filter: drop-shadow(0 -10px 25px rgba(0, 0, 0, 0.3));
   transition: 0.5s;
+  z-index: 5;
 }
 
-.heart:before,
-.heart:after {
+.heart:before, .heart:after {
   content: "";
   background-color: #e01911;
   border-radius: 50%;
-  height: 180px;
-  width: 180px;
+  height: 100px;
+  width: 100px;
   position: absolute;
 }
 
-.heart:before {
-  top: -100px;
-  left: 0;
-}
-
-.heart:after {
-  left: 100px;
-  top: 0;
-}
+.heart:before { top: -50px; left: 0; }
+.heart:after { left: 50px; top: 0; }
 
 .front {
   position: absolute;
+  border-right: 180px solid #fbd2d2;
+  border-top: 95px solid transparent;
+  border-bottom: 100px solid transparent;
+  left: 120px;
+  top: 5px;
   width: 0;
   height: 0;
-  border-right: 190px solid #fbd2d2;
-  border-top: 113px solid transparent;
-  border-bottom: 113px solid transparent;
-  top: 44px;
-  left: 80px;
-  z-index: 4;
+  z-index: 10;
 }
 
 .front:before {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 190px solid #fbd2d2;
-  border-top: 113px solid transparent;
-  border-bottom: 113px solid transparent;
-  top: -113px;
-  left: -170px;
-}
-
-.front:after {
-  width: 0;
-  height: 0;
   position: absolute;
   content: "";
-  border-bottom: 150px solid #fce7e9;
-  border-right: 180px solid transparent;
-  border-left: 180px solid transparent;
-  top: -36px;
-  left: -170px;
+  border-left: 300px solid #fbd2d2;
+  border-top: 195px solid transparent;
+  left: -120px;
+  top: -95px;
+  width: 0;
+  height: 0;
 }
 
 .text {
   position: absolute;
   font-family: arial;
-  letter-spacing: 3.5px;
+  letter-spacing: 2px;
   text-align: center;
   color: white;
-  z-index: 2;
-  top: 80px;
-  left: 15px;
-  transition: 0.5s;
-}
-
-.valentines-day:hover .heart {
-  transform: translateY(-50px) rotate(-45deg);
-}
-
-.valentines-day:hover .text {
-  transform: translateY(-50px);
-}
-
-.side.one .fa-heart {
-  font-size: 8em;
-  color: rgb(255, 0, 0);
-  animation: pulseHeart 1s ease-in-out infinite alternate;
-  cursor: default;
+  z-index: 15;
+  top: 85px;
+  left: 0;
+  width: 300px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 @keyframes pulseHeart {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.2);
-  }
+  0% { transform: scale(1); }
+  100% { transform: scale(1.2); }
 }
 
-/* Styles for mobile devices */
+/* --- MOBILE FIXES --- */
 @media screen and (max-width: 600px) {
+  body {
+    overflow-y: hidden; /* Initially hidden */
+  }
+
+  /* Make the envelope smaller to fit screen */
+  .valentines-day {
+    transform: scale(0.6);
+  }
+
   #card {
-    width: 90%;
-    max-width: 90%;
-    margin: 2em auto;
+    width: 90vw;
+    height: 85vh; /* Use Viewport Height */
+    max-width: none;
+    flex-direction: column; /* Stack vertically! */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important; /* Force centering */
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    border-radius: 10px;
+    overflow-y: auto; /* Allow scrolling INSIDE the card */
+    background: #fff;
   }
 
   .side {
-    width: 90%;
-    max-width: 90%;
-    margin: 0 auto;
+    width: 100%;
+    padding: 15px;
+    transform: none !important; /* CRITICAL: REMOVE SKEW */
+    background: #fff !important; /* Clean background */
+    box-shadow: none;
   }
 
-  .text {
-    font-size: 1em; /* Adjusting font size */
+  .side.one {
+    height: 120px; /* Smaller header */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px dashed #pink;
+  }
+
+  .side.two {
+    height: auto;
+    padding-bottom: 40px;
+  }
+  
+  .side.one .fa-heart {
+    font-size: 4em;
+  }
+
+  #card h2 {
+    font-size: 2em;
+  }
+
+  #card p {
+    font-size: 1.2em;
+    text-align: left; /* Easier to read on mobile */
   }
 }
