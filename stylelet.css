@@ -4,14 +4,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh; /* Changed to min-height for scrolling */
+  min-height: 100vh;
   font-family: "Sacramento", cursive;
   background-color: #fcf1e3;
-  overflow: hidden; /* JavaScript will handle overflow changes */
+  overflow: hidden; 
   margin: 0;
 }
 
-/* --- DESKTOP STYLES (Original) --- */
+/* --- DESKTOP STYLES --- */
 #card {
   height: 500px;
   width: 800px;
@@ -25,6 +25,39 @@ body {
   z-index: 10;
 }
 
+/* The Left Side (Heart Icon) */
+.side.one {
+  background: linear-gradient(90deg, #fff, #fff 40%, #ddd);
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: skew(10deg);
+  transform-origin: left;
+  z-index: 2;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.side.one .fa-heart {
+  font-size: 8em;
+  color: #bd1e59;
+  animation: pulseHeart 1s ease-in-out infinite alternate;
+}
+
+/* The Right Side (Text) */
+.side.two {
+  background: linear-gradient(-90deg, #fff, #fff 40%, #f0f0f0);
+  width: 500px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform: skew(10deg);
+  transform-origin: left;
+  z-index: 1;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
 #card h2 {
   font-size: 2.5em;
   margin: 0 0 10px 0;
@@ -33,48 +66,14 @@ body {
 }
 
 #card p {
-  font-size: 1.4em;
+  font-size: 1.5em;
   text-align: justify;
   line-height: 1.4;
   padding: 0 10px;
   color: #333;
 }
 
-.side {
-  background: #fff;
-  height: 100%;
-  width: 50%;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.side.one {
-  background: linear-gradient(90deg, #fff, #fff 40%, #ddd);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: skew(10deg);
-  transform-origin: left;
-  z-index: 2;
-}
-
-.side.two {
-  background: linear-gradient(-90deg, #fff, #fff 40%, #f0f0f0);
-  transform: skew(10deg);
-  transform-origin: left;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.side.one .fa-heart {
-  font-size: 6em;
-  color: #bd1e59;
-  animation: pulseHeart 1s ease-in-out infinite alternate;
-}
-
-/* --- ENVELOPE STYLES --- */
+/* --- ENVELOPE STYLES (Unchanged) --- */
 .valentines-day {
   position: relative;
   cursor: pointer;
@@ -85,7 +84,7 @@ body {
 .envelope {
   position: relative;
   filter: drop-shadow(0 0 25px rgba(0, 0, 0, 0.3));
-  width: 300px; /* Explicit dimensions help layout */
+  width: 300px;
   height: 200px;
   background-color: #ff9494;
 }
@@ -183,63 +182,73 @@ body {
   100% { transform: scale(1.2); }
 }
 
-/* --- MOBILE FIXES --- */
+/* --- MOBILE FIXES (This fixes the layout!) --- */
 @media screen and (max-width: 600px) {
   body {
-    overflow-y: hidden; /* Initially hidden */
+    overflow-y: hidden; 
   }
 
-  /* Make the envelope smaller to fit screen */
+  /* Make Envelope Smaller initially */
   .valentines-day {
     transform: scale(0.6);
   }
 
+  /* The Card Container */
   #card {
     width: 90vw;
-    height: 85vh; /* Use Viewport Height */
-    max-width: none;
-    flex-direction: column; /* Stack vertically! */
+    /* Allow it to be tall */
+    height: auto; 
+    max-height: 85vh; 
+    flex-direction: column; /* Stack Top to Bottom */
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) !important; /* Force centering */
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-    border-radius: 10px;
-    overflow-y: auto; /* Allow scrolling INSIDE the card */
+    transform: translate(-50%, -50%) !important;
     background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    overflow-y: auto; /* Allow scrolling inside the card if text is long */
   }
 
+  /* Reset the Sides to be flat paper */
   .side {
-    width: 100%;
-    padding: 15px;
-    transform: none !important; /* CRITICAL: REMOVE SKEW */
-    background: #fff !important; /* Clean background */
+    width: 100% !important;
+    transform: none !important; /* Remove the slant/skew */
+    background: #fff !important; /* Pure white paper */
     box-shadow: none;
+    padding: 10px 20px;
   }
 
+  /* The Heart Section (Top) */
   .side.one {
-    height: 120px; /* Smaller header */
+    height: 100px; /* Smaller top section */
     display: flex;
-    align-items: center;
     justify-content: center;
-    border-bottom: 1px dashed #pink;
-  }
-
-  .side.two {
-    height: auto;
-    padding-bottom: 40px;
+    align-items: center;
+    order: 1; /* Put at top */
+    padding-top: 20px;
   }
   
   .side.one .fa-heart {
-    font-size: 4em;
+    font-size: 3em; /* Smaller heart icon */
   }
 
+  /* The Text Section (Bottom) */
+  .side.two {
+    order: 2; /* Put below heart */
+    height: auto;
+    padding-bottom: 40px;
+  }
+
+  /* Bigger, clearer text */
   #card h2 {
-    font-size: 2em;
+    font-size: 2.2em;
+    margin-bottom: 20px;
   }
 
   #card p {
-    font-size: 1.2em;
-    text-align: left; /* Easier to read on mobile */
+    font-size: 1.5em !important; /* Bigger text as requested */
+    text-align: center; /* Center alignment looks cleaner on mobile */
+    line-height: 1.5;
   }
 }
