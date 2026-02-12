@@ -30,21 +30,21 @@
   </style>
 </head>
 <body class="gradient-background">
-  <div class="flex items-center justify-center h-screen">
+  <div class="flex items-center justify-center h-screen overflow-hidden">
     <div class="flex flex-col items-center p-4">
-      <img id="imageDisplay" src="image1.gif" alt="Cute kitten with flowers" class="rounded-md h-[300px]" style="object-fit: cover;" />
-      <h2 id="valentineQuestion" class="text-4xl font-bold italic text-[#bd1e59] my-4">Will you be my Valentine?</h2>
+      <img id="imageDisplay" src="image1.gif" alt="Cute kitten with flowers" class="rounded-md h-[300px] object-cover" />
+      <h2 id="valentineQuestion" class="text-4xl font-bold italic text-[#bd1e59] my-4 text-center">Will you be my Valentine?</h2>
 
+        <!-- Removed target="_blank" for better mobile navigation -->
         <a id="accessLink"
           href="indexlet.html"
-          target="_blank"
-          class="mt-3 text-lg font-semibold text-pink-600 underline hidden">
-          Click here 💖
+          class="mt-3 text-lg font-semibold text-pink-600 underline hidden z-50 bg-white/80 p-2 rounded-lg">
+          Click here to read my letter 💖
         </a>
 
-      <div class="flex gap-4 pt-[20px] items-center" id="responseButtons">
+      <div class="flex gap-4 pt-[20px] items-center w-full justify-center" id="responseButtons">
         <button id="yesButton"
-          class="bounce2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium disabled:pointer-events-none disabled:opacity-50 hover:bg-green-400 min-h-12 min-w-[75px] px-4 py-2 bg-green-500 text-white transition">
+          class="bounce2 inline-flex items-center justify-center whitespace-nowrap rounded-md text-[20px] font-medium disabled:pointer-events-none disabled:opacity-50 hover:bg-green-400 min-h-12 min-w-[75px] px-4 py-2 bg-green-500 text-white transition-all duration-300">
           Yes
         </button>
         <button id="noButton"
@@ -64,46 +64,45 @@
     const responseButtons = document.getElementById('responseButtons');
   
     let noClickCount = 0;
-    let buttonHeight = 48; // Starting height in pixels
+    let buttonHeight = 48; 
     let buttonWidth = 80;
-    let fontSize = 20; // Starting font size in pixels
+    let fontSize = 20; 
     const imagePaths = [
-      "image1.gif",
-      "image2.gif",
-      "image3.gif",
-      "image4.gif",
-      "image5.gif",
-      "image6.gif",
-      "image7.gif"
+      "image1.gif", "image2.gif", "image3.gif", "image4.gif", "image5.gif", "image6.gif", "image7.gif"
     ];
   
     noButton.addEventListener('click', function() {
       if (noClickCount < 5) {
         noClickCount++;
         imageDisplay.src = imagePaths[noClickCount];
-        buttonHeight += 35; // Increase height by 5px on each click
-        buttonWidth += 35;
-        fontSize += 25; // Increase font size by 1px on each click
-        yesButton.style.height = `${buttonHeight}px`; // Update button height
+        
+        // MOBILE FIX: Cap the button size so it doesn't overflow the screen
+        const maxHeight = window.innerHeight * 0.5;
+        const maxWidth = window.innerWidth * 0.9;
+
+        buttonHeight = Math.min(buttonHeight + 35, maxHeight);
+        buttonWidth = Math.min(buttonWidth + 35, maxWidth);
+        fontSize += 25; 
+        
+        yesButton.style.height = `${buttonHeight}px`; 
         yesButton.style.width = `${buttonWidth}px`;
-        yesButton.style.fontSize = `${fontSize}px`; // Update font size
+        yesButton.style.fontSize = `${fontSize}px`; 
+        
         if (noClickCount < 6) {
-          noButton.textContent = ["No", "Are you sure?", "Please🥺", "Don't do this to me :(", "You're breaking my heart", "I'm gonna cry..."][noClickCount];
+          noButton.textContent = ["No", "Are you sure?", "Cookie please", "Don't do this to me :(", "You're breaking my heart", "I'm gonna cry..."][noClickCount];
         }
       }
     });
   
     yesButton.addEventListener('click', () => {
-      imageDisplay.src = 'image7.gif'; // Change to image7.gif
+      imageDisplay.src = 'image7.gif'; 
       valentineQuestion.textContent = "Yayyy!! :3"; 
 
-
       const accessLink = document.getElementById('accessLink');
-
       
-      accessLink.classList.remove('hidden'); // Show the access link
-      responseButtons.style.display = 'none'; // Hide both buttons
-      confetti(); // Trigger confetti animation
+      accessLink.classList.remove('hidden'); 
+      responseButtons.style.display = 'none'; 
+      confetti(); 
     });
   </script>  
 </body>
